@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Toronto Waste Lookup</title>
+</head>
+
+<body>
+    <div id="container">
+        <!-- title -->
+        <h1 id="title">Toronto Waste Lookup</h1>
+        <!-- search field-->
+        <div id="search-form">
+            <input id="search-input" v-model="userInput" v-on:input="clearResults" @keyup.enter="getSearchResults" />
+            <img src="search-icon.jpg" id="search-submit" v-on:click="getSearchResults" />
+        </div>
+        <!-- results section-->
+        <div id="results">
+            <div class='item-container' v-for='(object, index) in resultsArray'>
+                <img class="star-icon" v-bind:id="index" v-bind:src='toggleStar(object.favourited)' v-on:click='toggleFavourites' />
+                <div class='list-title'>
+                    {{object.title}}
+                </div>
+                <div class='list-description' v-html='object.desc'></div>
+            </div>
+        </div>
+        <!-- favourites section-->
+        <div id="favourites">
+            <h2 id="subtitle">Favourites</h2>
+            <div class='item-container' v-for='(object, index) in resultsArray' v-show="object.favourited">
+                <img class='star-icon' v-bind:id="index" v-bind:src='toggleStar(object.favourited)' v-on:click='toggleFavourites' />
+                <div class='list-title'>
+                    {{object.title}}
+                </div>
+                <div class='list-description' v-html='object.desc'></div>
+            </div>
+        </div>
+    </div>
+    <!-- The favourites and results sections are the same,
+    except the favourites section has a 'v-show' directive
+    which toggles the display of an element -->
+    <script src="index.js"></script>
+</body>
+
+</html>
